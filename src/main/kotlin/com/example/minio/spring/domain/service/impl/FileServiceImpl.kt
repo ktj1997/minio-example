@@ -1,5 +1,7 @@
-package com.example.minio.spring.domain.service
+package com.example.minio.spring.domain.service.impl
 
+import com.example.minio.spring.domain.service.FileService
+import com.example.minio.spring.domain.service.FileSystemProvider
 import org.springframework.stereotype.Service
 
 @Service

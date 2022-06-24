@@ -1,6 +1,6 @@
-package com.example.minio.spring.domain.service
+package com.example.minio.spring.domain.model
 
-class File(
+class FileInfo(
     val bucket: String,
     val path: String,
     val isDir: Boolean,

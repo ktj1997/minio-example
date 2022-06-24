@@ -1,4 +1,4 @@
-package com.example.minio.spring.domain.service
+package com.example.minio.spring.domain.model
 
 import java.time.LocalDateTime
 
