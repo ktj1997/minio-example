@@ -2,7 +2,7 @@ package com.example.minio.spring.core.config.exceptions
 
 import java.time.LocalDateTime
 
-class ApiException(
+open class ApiException(
     val type: ExceptionType,
     override val message: String
 ) : RuntimeException(message) {

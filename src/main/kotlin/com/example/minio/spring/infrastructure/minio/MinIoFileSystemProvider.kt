@@ -1,4 +1,4 @@
-package com.example.minio.spring.infrastructure
+package com.example.minio.spring.infrastructure.minio
 
 import com.example.minio.spring.core.config.exceptions.ApiException
 import com.example.minio.spring.core.config.exceptions.ExceptionType
