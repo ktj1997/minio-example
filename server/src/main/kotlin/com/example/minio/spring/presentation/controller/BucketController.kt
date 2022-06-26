@@ -26,6 +26,7 @@ class BucketController(
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun createBucket(
         @RequestBody request: CreateBucketRequest
     ) {
@@ -34,6 +35,7 @@ class BucketController(
     }
 
     @DeleteMapping("/{bucket}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteBucket(@PathVariable bucket: String) {
         bucketFacade.deleteBucket(bucket)
     }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 open class ApiException(
     val type: ExceptionType,
-    override val message: String
+    override val message: String,
 ) : RuntimeException(message) {
     val timeStamp = LocalDateTime.now()
 

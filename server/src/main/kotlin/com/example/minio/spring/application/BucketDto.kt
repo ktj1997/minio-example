@@ -8,6 +8,6 @@ class CreateBucketRequestDto(
     val objectLock: Boolean
 )
 
-class BucketInfoResponseDto(val name: String, val createdAt: LocalDateTime) {
-    constructor(bucket: Bucket) : this(bucket.name, bucket.createdAt)
+class BucketInfoResponseDto(val name: String) {
+    constructor(bucket: Bucket) : this(bucket.name)
 }

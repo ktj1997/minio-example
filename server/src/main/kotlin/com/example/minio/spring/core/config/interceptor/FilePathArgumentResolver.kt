@@ -4,9 +4,9 @@ import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
+import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import javax.servlet.http.HttpServletRequest
 
 @Component
 class FilePathArgumentResolver : HandlerMethodArgumentResolver {
@@ -21,10 +21,11 @@ class FilePathArgumentResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any? {
-        val fullPath = (webRequest as HttpServletRequest).servletPath
+        val fullPath = (webRequest as ServletWebRequest).request.servletPath
         val bucketPrefix = fullPath.split("/")[2]
+        println(bucketPrefix)
         val filePath = fullPath.split(bucketPrefix)[1];
-
+        println(filePath)
         return filePath
     }
 }

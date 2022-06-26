@@ -11,7 +11,8 @@ class GlobalExceptionHandler {
         val type = exception.type
         return ExceptionResponse(
             code = type.code,
-            message = exception.message,
+            message = type.message,
+            reason = exception.message,
             timeStamp = exception.timeStamp
         )
     }
