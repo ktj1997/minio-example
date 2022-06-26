@@ -19,6 +19,7 @@ class BucketFacade(
         )
     }
 
-    fun deleteBucket(path: String) {
+    fun deleteBucket(bucket: String) {
+        bucketService.deleteBucket(bucket)
     }
 }

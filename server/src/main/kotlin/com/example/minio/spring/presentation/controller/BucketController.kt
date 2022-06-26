@@ -35,8 +35,6 @@ class BucketController(
 
     @DeleteMapping("/{bucket}")
     fun deleteBucket(@PathVariable bucket: String) {
-
+        bucketFacade.deleteBucket(bucket)
     }
-
-
 }

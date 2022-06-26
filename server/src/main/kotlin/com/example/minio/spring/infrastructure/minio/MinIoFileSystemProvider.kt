@@ -6,6 +6,7 @@ import com.example.minio.spring.domain.model.Bucket
 import com.example.minio.spring.domain.service.FileSystemProvider
 import io.minio.MakeBucketArgs
 import io.minio.MinioClient
+import io.minio.RemoveBucketArgs
 import org.springframework.stereotype.Component
 import kotlin.streams.toList
 
@@ -38,8 +39,14 @@ class MinIoFileSystemProvider(
         }
     }
 
-    override fun deleteBucket() {
-        TODO("Not yet implemented")
+    override fun deleteBucket(bucket: String) {
+        try {
+            val args = RemoveBucketArgs.builder()
+                .bucket(bucket).build()
+            minioClient.removeBucket(args)
+        } catch (e: Exception) {
+            throw ApiException(ExceptionType.DELETE_BUCKET_FAILURE, e.message!!)
+        }
     }
 
     override fun findFiles() {

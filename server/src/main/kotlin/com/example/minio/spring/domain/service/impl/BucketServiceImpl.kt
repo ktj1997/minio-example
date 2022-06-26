@@ -18,7 +18,7 @@ class BucketServiceImpl(
         return fileSystemProvider.findBuckets()
     }
 
-    override fun deleteBucket() {
-        TODO("Not yet implemented")
+    override fun deleteBucket(bucket: String) {
+        fileSystemProvider.deleteBucket(bucket)
     }
 }
