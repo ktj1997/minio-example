@@ -1,17 +1,18 @@
 package com.example.minio.spring.domain.service
 
 import com.example.minio.spring.domain.model.Bucket
+import com.example.minio.spring.domain.model.FileDownloadQuery
 import com.example.minio.spring.domain.model.FileInfo
-import java.io.File
+import com.example.minio.spring.domain.model.FileSearchQuery
+import com.example.minio.spring.domain.model.FileUploadCommand
 
 interface FileSystemProvider {
     fun createBucket(name: String, objectLock: Boolean)
     fun findBuckets(): List<Bucket>
     fun deleteBucket(name: String)
 
-    fun findFiles(bucket: String, path: String): List<FileInfo>
-    fun createFile(bucket: String, path: String, file: File)
-    fun updateFile(bucket: String, path: String)
+    fun findFiles(query: FileSearchQuery): List<FileInfo>
+    fun createFile(command: FileUploadCommand)
     fun deleteFile(bucket: String, path: String)
-
+    fun downloadFile(query: FileDownloadQuery)
 }

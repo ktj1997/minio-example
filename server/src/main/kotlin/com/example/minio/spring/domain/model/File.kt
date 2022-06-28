@@ -1,16 +1,29 @@
 package com.example.minio.spring.domain.model
 
+import java.io.InputStream
 
-class FileInfo(
+
+data class FileInfo(
     val bucket: String,
     val path: String,
     val isDir: Boolean,
-    val payload: String? = null,
 ) {
 }
 
-enum class FileExtension(
-    val ext: String
-) {
-    JSON("json")
-}
+data class FileSearchQuery(
+    val bucket: String,
+    val path: String
+)
+
+data class FileDownloadQuery(
+    val bucket: String,
+    val path: String
+)
+
+data class FileUploadCommand(
+    val bucket: String,
+    val path: String,
+    val contentType: String,
+    val fileName: String,
+    val inputStream: InputStream
+)

@@ -1,11 +1,12 @@
 package com.example.minio.spring.domain.service
 
 import com.example.minio.spring.domain.model.FileInfo
-import java.io.File
+import com.example.minio.spring.domain.model.FileSearchQuery
+import com.example.minio.spring.domain.model.FileUploadCommand
 
 interface FileService {
-    fun findFiles(bucket: String, path: String): List<FileInfo>
-    fun createFile(bucket: String, path: String, file: File)
+    fun findFiles(query: FileSearchQuery): List<FileInfo>
+    fun createFile(command: FileUploadCommand)
     fun updateFile(bucket: String, path: String)
     fun deleteFile(bucket: String, path: String)
 }
