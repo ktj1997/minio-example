@@ -96,7 +96,8 @@ class MinIoFileSystemProvider(
     override fun downloadFile(query: FileDownloadQuery): FileDownloadInfo {
         val (bucket, path) = query
         val baseDirectory = File(minIoProperties.downloadFilePath)
-        val tmpFilePath = "${minIoProperties.downloadFilePath}/${path}"
+        val fileName = FileUtil.getOriginalFileName(path)
+        val tmpFilePath = "${minIoProperties.downloadFilePath}/${fileName}"
 
         baseDirectory.mkdirs()
         downloadObjectToLocal(bucket, path, tmpFilePath)
@@ -107,7 +108,7 @@ class MinIoFileSystemProvider(
             val file = InputStreamResource(inputStream)
             return FileDownloadInfo(
                 file = file,
-                fileName = FileUtil.getOriginalFileName(path)
+                fileName = fileName
             )
         } else throw ApiException(ExceptionType.DOWNLOAD_FILE_FAILURE)
     }
