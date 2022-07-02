@@ -6,7 +6,12 @@ import com.example.minio.spring.application.FileInfoResponseDto
 import com.example.minio.spring.application.FileSearchRequestDto
 import com.example.minio.spring.application.FileUploadRequestDto
 import com.example.minio.spring.core.config.interceptor.FilePath
+import com.example.minio.spring.presentation.response.CommonResponse
+import org.springframework.core.io.Resource
+import org.springframework.http.ContentDisposition
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import java.net.URLEncoder
 
 @RestController
 @RequestMapping("/buckets/{bucket}")
@@ -29,11 +35,12 @@ class FileController(
     fun findFiles(
         @PathVariable bucket: String,
         @FilePath filePath: String
-    ): List<FileInfoResponseDto> {
-        val requestDto = FileSearchRequestDto(
-            bucket, filePath
-        )
-        return fileFacade.findFiles(requestDto)
+    ): ResponseEntity<CommonResponse<List<FileInfoResponseDto>>> {
+        val requestDto = FileSearchRequestDto(bucket, filePath)
+        val responseDto = fileFacade.findFiles(requestDto)
+
+        val response = CommonResponse(data = responseDto, statusCode = 200)
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/files/download")
@@ -41,12 +48,20 @@ class FileController(
     fun downloadFile(
         @PathVariable bucket: String,
         @RequestParam path: String
-    ) {
-        val requestDto = FileDownloadRequestDto(
-            bucket, path
-        )
+    ): ResponseEntity<Resource> {
+        val requestDto = FileDownloadRequestDto(bucket, path);
+        val responseDto = fileFacade.downloadFile(requestDto)
+        val headers = HttpHeaders()
+        headers.contentDisposition =
+            ContentDisposition.builder("attachment")
+                .filename(URLEncoder.encode(responseDto.fileName, "UTF-8")).build()
 
+
+        return ResponseEntity.ok().headers(
+            headers
+        ).body(responseDto.file)
     }
+
 
     @PostMapping("/**")
     @ResponseStatus(HttpStatus.CREATED)

@@ -4,6 +4,7 @@ import com.example.minio.spring.domain.model.FileDownloadQuery
 import com.example.minio.spring.domain.model.FileInfo
 import com.example.minio.spring.domain.model.FileSearchQuery
 import com.example.minio.spring.domain.model.FileUploadCommand
+import org.springframework.core.io.Resource
 import java.io.InputStream
 
 data class FileUploadRequestDto(
@@ -30,6 +31,11 @@ data class FileDownloadRequestDto(
         )
     }
 }
+
+data class FileDownloadResponseDto(
+    val file: Resource,
+    val fileName: String
+)
 
 data class FileSearchRequestDto(
     val bucket: String,

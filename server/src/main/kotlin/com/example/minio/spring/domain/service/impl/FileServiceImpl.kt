@@ -1,5 +1,7 @@
 package com.example.minio.spring.domain.service.impl
 
+import com.example.minio.spring.domain.model.FileDownloadInfo
+import com.example.minio.spring.domain.model.FileDownloadQuery
 import com.example.minio.spring.domain.model.FileInfo
 import com.example.minio.spring.domain.model.FileSearchQuery
 import com.example.minio.spring.domain.model.FileUploadCommand
@@ -15,12 +17,12 @@ class FileServiceImpl(
         return fileSystemProvider.findFiles(query)
     }
 
-    override fun createFile(command: FileUploadCommand) {
-        fileSystemProvider.createFile(command)
+    override fun downloadFile(query: FileDownloadQuery): FileDownloadInfo {
+        return fileSystemProvider.downloadFile(query)
     }
 
-    override fun updateFile(bucket: String, path: String) {
-        TODO("Not yet implemented")
+    override fun createFile(command: FileUploadCommand) {
+        fileSystemProvider.createFile(command)
     }
 
     override fun deleteFile(bucket: String, path: String) {

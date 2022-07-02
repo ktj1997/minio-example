@@ -1,5 +1,11 @@
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+
 minio:
   accessKey: ${MINIO_ACCESS_KEY:test}
   secretKey: ${MINIO_SECRET_KEY:test1234}
   url: ${MINIO_URL:http://localhost:9000}
   fileSize: 100000000
+  downloadFilePath: ${user.home}/tempdownload

@@ -9,5 +9,6 @@ enum class ExceptionType(
     FIND_BUCKETS_FAILURE("BUCKET_003", "Bucket 탐색에 실패하였습니다."),
 
     FIND_FILE_FAILURE("FILE_001", "File 탐색에 실패하였습니다."),
-    UPLOAD_FILE_FAILURE("FILE_002", "File 업로드에 실패하였습니다.")
+    UPLOAD_FILE_FAILURE("FILE_002", "File 업로드에 실패하였습니다."),
+    DOWNLOAD_FILE_FAILURE("FILE_003", "File 다온로드에 실패하였습니다.")
 }

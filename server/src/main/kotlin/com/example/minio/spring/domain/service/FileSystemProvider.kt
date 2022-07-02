@@ -1,6 +1,7 @@
 package com.example.minio.spring.domain.service
 
 import com.example.minio.spring.domain.model.Bucket
+import com.example.minio.spring.domain.model.FileDownloadInfo
 import com.example.minio.spring.domain.model.FileDownloadQuery
 import com.example.minio.spring.domain.model.FileInfo
 import com.example.minio.spring.domain.model.FileSearchQuery
@@ -14,5 +15,5 @@ interface FileSystemProvider {
     fun findFiles(query: FileSearchQuery): List<FileInfo>
     fun createFile(command: FileUploadCommand)
     fun deleteFile(bucket: String, path: String)
-    fun downloadFile(query: FileDownloadQuery)
+    fun downloadFile(query: FileDownloadQuery): FileDownloadInfo
 }

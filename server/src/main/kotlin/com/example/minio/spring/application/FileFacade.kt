@@ -20,8 +20,14 @@ class FileFacade(
         fileService.createFile(command)
     }
 
-    fun downloadFile(requestDto: FileDownloadRequestDto) {
+    fun downloadFile(requestDto: FileDownloadRequestDto): FileDownloadResponseDto {
+        val query = requestDto.toQuery()
+        val responseDto = fileService.downloadFile(query)
 
+        return FileDownloadResponseDto(
+            file = responseDto.file,
+            fileName = responseDto.fileName
+        )
     }
 
     fun deleteFile(bucket: String, path: String) {

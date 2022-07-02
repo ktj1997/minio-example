@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5515f58a-9adb-48f6-b67c-f7b0aa9f9a6f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.bloomcycle.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.bloomcycle.bin/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.tracker.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.tracker.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin/ad660c91-7cb0-4934-b922-9d11fe1db887/part.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage.json/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage.json/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/example/.usage-cache.bin/e03578ff-22f6-423c-8257-edd7ead37ace/part.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/example/.usage-cache.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/example/.usage-cache.bin/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/config/iam/sts/WCL84VSYY1H0JOGD5S1D/identity.json/xl.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/tmp/.trash/326ae759-4206-4c20-9171-1bbf1dde81e8/part.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/tmp/.trash/3a0dc3ac-e572-44d4-b7f7-769170f30f9e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/tmp/.trash/7e37c67e-d421-4e55-af0c-fc819db98445/part.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/tmp/.trash/9ccf749c-72a7-4c71-84a9-115f65937051/part.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/tmp/.trash/f1a350d7-8b1e-4fad-babf-19e7ef40164e/part.1" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2BNqSktKDUPHHn0H3ckCcMaDA1G" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../server" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5515f58a-9adb-48f6-b67c-f7b0aa9f9a6f" name="Changes" comment="" />
+      <created>1656756891906</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656756891906</updated>
+      <workItem from="1656756893164" duration="4000" />
+    </task>
+    <servers />
+  </component>
+</project>

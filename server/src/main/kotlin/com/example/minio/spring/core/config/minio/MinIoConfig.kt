@@ -29,5 +29,6 @@ data class MinIoProperties(
     val accessKey: String,
     val secretKey: String,
     val url: String,
-    val fileSize: Long
+    val fileSize: Long,
+    val downloadFilePath: String
 )
