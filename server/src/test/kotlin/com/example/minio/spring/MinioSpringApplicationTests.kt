@@ -9,5 +9,4 @@ class MinioSpringApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

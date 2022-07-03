@@ -13,6 +13,5 @@ object FileUtil {
             path
         else
             path.substring(pathDelimiterIndex + 1)
-
     }
 }

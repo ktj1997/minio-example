@@ -17,6 +17,7 @@ import io.minio.MakeBucketArgs
 import io.minio.MinioClient
 import io.minio.PutObjectArgs
 import io.minio.RemoveBucketArgs
+import io.minio.RemoveObjectArgs
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
 import java.io.File
@@ -25,7 +26,8 @@ import kotlin.streams.toList
 
 @Component
 class MinIoFileSystemProvider(
-    private val minioClient: MinioClient, private val minIoProperties: MinIoProperties
+    private val minioClient: MinioClient,
+    private val minIoProperties: MinIoProperties
 ) : FileSystemProvider {
     override fun createBucket(name: String, objectLock: Boolean) {
         try {
@@ -44,7 +46,6 @@ class MinIoFileSystemProvider(
                     name = it.name(), createdAt = it.creationDate().toLocalDateTime()
                 )
             }.toList()
-
         } catch (e: Exception) {
             throw ApiException(ExceptionType.FIND_BUCKETS_FAILURE, e.message!!)
         }
@@ -64,7 +65,7 @@ class MinIoFileSystemProvider(
 
         if (!FileUtil.isDir(path)) throw ApiException(ExceptionType.FIND_FILE_FAILURE)
         try {
-            val dirPath = "${path}/"
+            val dirPath = "$path/"
             val args = ListObjectsArgs.builder().bucket(bucket).prefix(dirPath).build()
             val files = minioClient.listObjects(args)
             return files.asSequence().map { result -> result.get() }.map { item ->
@@ -79,15 +80,21 @@ class MinIoFileSystemProvider(
         }
     }
 
-    /**
-     * TODO 경로애 대한 리턴값 작성하기
-     */
-    override fun createFile(command: FileUploadCommand) {
+    override fun createFile(command: FileUploadCommand): FileInfo {
         try {
-            val args = PutObjectArgs.builder().bucket(command.bucket).contentType(command.contentType)
-                .`object`(command.fileName).stream(command.inputStream, -1, minIoProperties.fileSize).build()
+            val filePath = "${command.path}/${command.fileName}"
+            val args = PutObjectArgs.builder()
+                .bucket(command.bucket)
+                .contentType(command.contentType)
+                .`object`(filePath)
+                .stream(command.inputStream, -1, minIoProperties.fileSize).build()
+            val response = minioClient.putObject(args)
 
-            minioClient.putObject(args)
+            return FileInfo(
+                bucket = response.bucket(),
+                path = response.`object`(),
+                isDir = false
+            )
         } catch (e: Exception) {
             throw ApiException(ExceptionType.UPLOAD_FILE_FAILURE, e.message!!)
         }
@@ -97,7 +104,7 @@ class MinIoFileSystemProvider(
         val (bucket, path) = query
         val baseDirectory = File(minIoProperties.downloadFilePath)
         val fileName = FileUtil.getOriginalFileName(path)
-        val tmpFilePath = "${minIoProperties.downloadFilePath}/${fileName}"
+        val tmpFilePath = "${minIoProperties.downloadFilePath}/$fileName"
 
         baseDirectory.mkdirs()
         downloadObjectToLocal(bucket, path, tmpFilePath)
@@ -113,7 +120,6 @@ class MinIoFileSystemProvider(
         } else throw ApiException(ExceptionType.DOWNLOAD_FILE_FAILURE)
     }
 
-
     private fun downloadObjectToLocal(bucket: String, path: String, tmpFilePath: String) {
         val args = DownloadObjectArgs.builder().bucket(bucket).`object`(path).filename(tmpFilePath).build()
         try {
@@ -124,6 +130,14 @@ class MinIoFileSystemProvider(
     }
 
     override fun deleteFile(bucket: String, path: String) {
-        TODO("Not yet implemented")
+        val args = RemoveObjectArgs.builder()
+            .bucket(bucket)
+            .`object`(path)
+            .build()
+        try {
+            minioClient.removeObject(args)
+        } catch (e: Exception) {
+            throw ApiException(ExceptionType.REMOVE_FILE_FAILURE)
+        }
     }
 }

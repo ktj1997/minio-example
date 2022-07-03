@@ -21,6 +21,11 @@ data class FileUploadRequestDto(
     }
 }
 
+data class FileUploadResponseDto(
+    val bucket: String,
+    val path: String
+)
+
 data class FileDownloadRequestDto(
     val bucket: String,
     val path: String
@@ -53,8 +58,7 @@ data class FileInfoResponseDto(
     val path: String,
     val payload: String? = null,
     val isDir: Boolean,
-) {
-}
+)
 
 fun FileInfo.toFileInfoResponseDto(): FileInfoResponseDto {
     return FileInfoResponseDto(

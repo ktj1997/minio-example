@@ -3,7 +3,6 @@ package com.example.minio.spring.domain.model
 import org.springframework.core.io.Resource
 import java.io.InputStream
 
-
 data class FileInfo(
     val bucket: String,
     val path: String,

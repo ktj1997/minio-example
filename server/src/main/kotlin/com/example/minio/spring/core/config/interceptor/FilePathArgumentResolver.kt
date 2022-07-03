@@ -12,7 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class FilePathArgumentResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.getParameterAnnotation(FilePath::class.java) != null &&
-                parameter.parameterType == String::class.java
+            parameter.parameterType == String::class.java
     }
 
     override fun resolveArgument(
@@ -23,7 +23,7 @@ class FilePathArgumentResolver : HandlerMethodArgumentResolver {
     ): Any? {
         val fullPath = (webRequest as ServletWebRequest).request.servletPath
         val bucketPrefix = fullPath.split("/")[2]
-        val filePath = fullPath.split(bucketPrefix)[1];
+        val filePath = fullPath.split(bucketPrefix)[1]
         return filePath
     }
 }

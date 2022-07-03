@@ -5,5 +5,4 @@ import java.time.LocalDateTime
 class Bucket(
     val name: String,
     val createdAt: LocalDateTime
-) {
-}
+)

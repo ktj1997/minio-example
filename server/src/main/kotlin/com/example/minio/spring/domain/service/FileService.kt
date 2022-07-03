@@ -9,6 +9,6 @@ import com.example.minio.spring.domain.model.FileUploadCommand
 interface FileService {
     fun findFiles(query: FileSearchQuery): List<FileInfo>
     fun downloadFile(query: FileDownloadQuery): FileDownloadInfo
-    fun createFile(command: FileUploadCommand)
+    fun createFile(command: FileUploadCommand): FileInfo
     fun deleteFile(bucket: String, path: String)
 }

@@ -7,5 +7,4 @@ class ExceptionResponse(
     val message: String,
     val reason: String,
     val timeStamp: LocalDateTime
-) {
-}
+)

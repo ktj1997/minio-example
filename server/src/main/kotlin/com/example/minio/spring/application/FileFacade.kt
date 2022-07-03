@@ -15,22 +15,26 @@ class FileFacade(
         return files.stream().map { it.toFileInfoResponseDto() }.toList()
     }
 
-    fun createFile(requestDto: FileUploadRequestDto) {
+    fun createFile(requestDto: FileUploadRequestDto): FileUploadResponseDto {
         val command = requestDto.toCommand()
-        fileService.createFile(command)
+        val info = fileService.createFile(command)
+        return FileUploadResponseDto(
+            bucket = info.bucket,
+            path = info.path
+        )
     }
 
     fun downloadFile(requestDto: FileDownloadRequestDto): FileDownloadResponseDto {
         val query = requestDto.toQuery()
-        val responseDto = fileService.downloadFile(query)
+        val info = fileService.downloadFile(query)
 
         return FileDownloadResponseDto(
-            file = responseDto.file,
-            fileName = responseDto.fileName
+            file = info.file,
+            fileName = info.fileName
         )
     }
 
     fun deleteFile(bucket: String, path: String) {
-
+        fileService.deleteFile(bucket, path)
     }
 }

@@ -13,7 +13,7 @@ interface FileSystemProvider {
     fun deleteBucket(name: String)
 
     fun findFiles(query: FileSearchQuery): List<FileInfo>
-    fun createFile(command: FileUploadCommand)
+    fun createFile(command: FileUploadCommand): FileInfo
     fun deleteFile(bucket: String, path: String)
     fun downloadFile(query: FileDownloadQuery): FileDownloadInfo
 }

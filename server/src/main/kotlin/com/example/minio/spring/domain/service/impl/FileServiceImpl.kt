@@ -21,11 +21,11 @@ class FileServiceImpl(
         return fileSystemProvider.downloadFile(query)
     }
 
-    override fun createFile(command: FileUploadCommand) {
-        fileSystemProvider.createFile(command)
+    override fun createFile(command: FileUploadCommand): FileInfo {
+        return fileSystemProvider.createFile(command)
     }
 
     override fun deleteFile(bucket: String, path: String) {
-        TODO("Not yet implemented")
+        fileSystemProvider.deleteFile(bucket, path)
     }
 }
