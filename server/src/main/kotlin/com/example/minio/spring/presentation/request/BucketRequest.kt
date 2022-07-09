@@ -8,7 +8,7 @@ class CreateBucketRequest(
 ) {
     fun toDto(): CreateBucketRequestDto {
         return CreateBucketRequestDto(
-            name = name,
+            name = name.lowercase(),
             objectLock = objectLock
         )
     }

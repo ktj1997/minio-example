@@ -1,5 +1,6 @@
 package com.example.minio.spring
 
+import com.example.minio.spring.MinIoProperties.COMMAND
 import com.example.minio.spring.MinIoProperties.IMAGE
 import com.example.minio.spring.MinIoProperties.MINIO_ROOT_PASSWORD
 import com.example.minio.spring.MinIoProperties.MINIO_ROOT_USER
@@ -8,8 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.wait.strategy.WaitAllStrategy
+import org.testcontainers.containers.wait.strategy.WaitStrategy
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.time.Duration
 
 @SpringBootTest
 @Testcontainers
@@ -23,7 +27,8 @@ class ContainerTestBase {
                 .withExposedPorts(PORT)
                 .withEnv("MINIO_ROOT_USER",MINIO_ROOT_USER)
                 .withEnv("MINIO_ROOT_PASSWORD", MINIO_ROOT_PASSWORD)
-
+                .withCommand(COMMAND)
+                .withStartupTimeout(Duration.ofSeconds(60))
 
         @JvmStatic
         @DynamicPropertySource
