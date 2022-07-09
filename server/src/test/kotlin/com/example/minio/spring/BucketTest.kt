@@ -1,55 +1,70 @@
 package com.example.minio.spring
 
 import com.example.minio.spring.MinIoProperties.DEFAULT_BUCKET
-import com.example.minio.spring.application.BucketFacade
-import com.example.minio.spring.application.CreateBucketRequestDto
+import com.example.minio.spring.presentation.request.CreateBucketRequest
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.minio.BucketExistsArgs
 import io.minio.MinioClient
-import io.minio.RemoveBucketArgs
 import junit.framework.Assert.assertFalse
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class BucketTest @Autowired constructor(
+    private val mvc: MockMvc,
     private val minioClient: MinioClient,
-    private val bucketFacade: BucketFacade
+    private val objectMapper: ObjectMapper
 ) : ContainerTestBase() {
 
     @Test
     @Order(1)
     fun createBucketTest() {
-        val request = CreateBucketRequestDto(
+        val body = CreateBucketRequest(
             name = DEFAULT_BUCKET,
             objectLock = false
         )
-        val bucketExistArgs = BucketExistsArgs.builder().bucket(request.name).build()
+        mvc.post("/buckets") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(body)
+        }.andExpect {
+            status { isCreated() }
+        }
 
-        assertFalse(minioClient.bucketExists(bucketExistArgs))
-        assertDoesNotThrow { bucketFacade.createBucket(request) }
+        val bucketExistArgs = BucketExistsArgs.builder().bucket(body.name).build()
         assertTrue(minioClient.bucketExists(bucketExistArgs))
     }
 
     @Test
     @Order(2)
-    fun checkBucketExist(){
-        val buckets = bucketFacade.findBuckets()
-        assertTrue(buckets.any { it.name == DEFAULT_BUCKET })
+    fun checkBucketExist() {
+        mvc.get("/buckets") {
+            contentType = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isOk() }
+            jsonPath("statusCode") { value(200) }
+            jsonPath("data[0].name") { value(DEFAULT_BUCKET) }
+        }
     }
 
     @Test
     @Order(3)
-    fun deleteBucket(){
-        val bucketExistArgs = BucketExistsArgs.builder().bucket(DEFAULT_BUCKET).build()
+    fun deleteBucket() {
+        mvc.delete("/buckets/${DEFAULT_BUCKET}") {
+            contentType = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isNoContent() }
+        }
 
-        assertTrue(minioClient.bucketExists(bucketExistArgs))
-        assertDoesNotThrow { bucketFacade.deleteBucket(DEFAULT_BUCKET) }
+        val bucketExistArgs = BucketExistsArgs.builder().bucket(DEFAULT_BUCKET).build()
         assertFalse(minioClient.bucketExists(bucketExistArgs))
     }
 

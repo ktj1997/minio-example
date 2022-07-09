@@ -5,18 +5,18 @@ import com.example.minio.spring.MinIoProperties.IMAGE
 import com.example.minio.spring.MinIoProperties.MINIO_ROOT_PASSWORD
 import com.example.minio.spring.MinIoProperties.MINIO_ROOT_USER
 import com.example.minio.spring.MinIoProperties.PORT
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
-import org.testcontainers.containers.wait.strategy.WaitAllStrategy
-import org.testcontainers.containers.wait.strategy.WaitStrategy
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.Duration
 
 @SpringBootTest
 @Testcontainers
+@AutoConfigureMockMvc
 class ContainerTestBase {
 
     companion object{

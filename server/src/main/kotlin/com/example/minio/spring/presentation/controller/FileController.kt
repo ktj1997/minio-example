@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
-import java.net.URI
 import java.net.URLEncoder
 
 @RestController
@@ -33,6 +32,7 @@ class FileController(
 ) {
 
     @GetMapping("/**")
+    @ResponseStatus(HttpStatus.OK)
     fun findFiles(
         @PathVariable bucket: String,
         @FilePath filePath: String
@@ -41,10 +41,11 @@ class FileController(
         val responseDto = fileFacade.findFiles(requestDto)
 
         val response = CommonResponse(data = responseDto, statusCode = 200)
-        return ResponseEntity.ok(response)
+        return ResponseEntity(response,HttpStatus.OK)
     }
 
     @GetMapping("/files/download")
+    @ResponseStatus(HttpStatus.OK)
     fun downloadFile(
         @PathVariable bucket: String,
         @RequestParam path: String
@@ -56,11 +57,12 @@ class FileController(
             ContentDisposition.builder("attachment")
                 .filename(URLEncoder.encode(responseDto.fileName, "UTF-8")).build()
 
-        return ResponseEntity.ok().headers(
-            headers
-        ).body(responseDto.file)
+        return ResponseEntity(
+            responseDto.file,
+            headers,
+            HttpStatus.OK
+        )
     }
-
     @PostMapping("/**")
     fun createFile(
         @PathVariable bucket: String,
@@ -75,8 +77,7 @@ class FileController(
             fileName = multipartFile.originalFilename!!
         )
         val responseDto = fileFacade.createFile(requestDto)
-        val uri = "http://buckets/${bucket}$path/${URLEncoder.encode(multipartFile.originalFilename,"UTF-8")}"
-        return ResponseEntity.created(URI.create(uri)).body(CommonResponse(responseDto, 201))
+        return ResponseEntity(CommonResponse(responseDto, 201), HttpStatus.CREATED)
     }
 
     @DeleteMapping("/**")

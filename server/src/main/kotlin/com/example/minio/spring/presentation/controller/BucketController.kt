@@ -3,7 +3,9 @@ package com.example.minio.spring.presentation.controller
 import com.example.minio.spring.application.BucketFacade
 import com.example.minio.spring.application.BucketInfoResponseDto
 import com.example.minio.spring.presentation.request.CreateBucketRequest
+import com.example.minio.spring.presentation.response.CommonResponse
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,8 +23,12 @@ class BucketController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findBuckets(): List<BucketInfoResponseDto> {
-        return bucketFacade.findBuckets()
+    fun findBuckets(): ResponseEntity<CommonResponse<List<BucketInfoResponseDto>>> {
+        val response = CommonResponse(
+            data = bucketFacade.findBuckets(),
+            statusCode = 200
+        )
+        return ResponseEntity(response,HttpStatus.OK)
     }
 
     @PostMapping
