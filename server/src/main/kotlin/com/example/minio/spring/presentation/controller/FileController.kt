@@ -41,7 +41,7 @@ class FileController(
         val responseDto = fileFacade.findFiles(requestDto)
 
         val response = CommonResponse(data = responseDto, statusCode = 200)
-        return ResponseEntity(response,HttpStatus.OK)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @GetMapping("/files/download")
@@ -63,6 +63,7 @@ class FileController(
             HttpStatus.OK
         )
     }
+
     @PostMapping("/**")
     fun createFile(
         @PathVariable bucket: String,
@@ -85,8 +86,8 @@ class FileController(
     fun deleteFile(
         @PathVariable bucket: String,
         @FilePath path: String
-    ): ResponseEntity<Void> {
-        fileFacade.deleteFile(bucket, path)
-        return ResponseEntity.noContent().build()
+    ): ResponseEntity<CommonResponse<Unit>> {
+        val responseDto = fileFacade.deleteFile(bucket, path)
+        return ResponseEntity(CommonResponse(responseDto, 204), HttpStatus.NO_CONTENT)
     }
 }

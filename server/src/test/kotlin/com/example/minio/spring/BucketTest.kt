@@ -5,7 +5,7 @@ import com.example.minio.spring.presentation.request.CreateBucketRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.minio.BucketExistsArgs
 import io.minio.MinioClient
-import junit.framework.Assert.assertFalse
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -58,7 +58,7 @@ class BucketTest @Autowired constructor(
     @Test
     @Order(3)
     fun deleteBucket() {
-        mvc.delete("/buckets/${DEFAULT_BUCKET}") {
+        mvc.delete("/buckets/$DEFAULT_BUCKET") {
             contentType = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isNoContent() }
@@ -67,5 +67,4 @@ class BucketTest @Autowired constructor(
         val bucketExistArgs = BucketExistsArgs.builder().bucket(DEFAULT_BUCKET).build()
         assertFalse(minioClient.bucketExists(bucketExistArgs))
     }
-
 }

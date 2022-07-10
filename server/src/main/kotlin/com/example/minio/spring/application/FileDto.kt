@@ -56,7 +56,6 @@ data class FileSearchRequestDto(
 data class FileInfoResponseDto(
     val bucket: String,
     val path: String,
-    val payload: String? = null,
     val isDir: Boolean,
 )
 

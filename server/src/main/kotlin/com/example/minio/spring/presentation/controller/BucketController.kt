@@ -28,21 +28,24 @@ class BucketController(
             data = bucketFacade.findBuckets(),
             statusCode = 200
         )
-        return ResponseEntity(response,HttpStatus.OK)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createBucket(
         @RequestBody request: CreateBucketRequest
-    ) {
+    ): ResponseEntity<CommonResponse<Unit>> {
         val requestDto = request.toDto()
-        bucketFacade.createBucket(requestDto)
+        val responseDto = bucketFacade.createBucket(requestDto)
+
+        return ResponseEntity(CommonResponse(responseDto, 201), HttpStatus.CREATED)
     }
 
     @DeleteMapping("/{bucket}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteBucket(@PathVariable bucket: String) {
-        bucketFacade.deleteBucket(bucket)
+    fun deleteBucket(@PathVariable bucket: String): ResponseEntity<CommonResponse<Unit>> {
+        val responseDto = bucketFacade.deleteBucket(bucket)
+        return ResponseEntity(CommonResponse(responseDto, 204), HttpStatus.NO_CONTENT)
     }
 }

@@ -23,7 +23,6 @@ class FilePathArgumentResolver : HandlerMethodArgumentResolver {
     ): Any? {
         val fullPath = (webRequest as ServletWebRequest).request.servletPath
         val bucketPrefix = fullPath.split("/")[2]
-        val filePath = fullPath.split(bucketPrefix)[1]
-        return filePath
+        return fullPath.split(bucketPrefix)[1]
     }
 }

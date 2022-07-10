@@ -9,26 +9,27 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.springframework.test.context.web.WebAppConfiguration
 import org.testcontainers.containers.GenericContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.time.Duration
 
 @SpringBootTest
 @Testcontainers
+@WebAppConfiguration
 @AutoConfigureMockMvc
 class ContainerTestBase {
 
-    companion object{
+    companion object {
         @JvmStatic
-        @Container
-        private val instance : KGenericContainer =
+        private val instance: KGenericContainer =
             KGenericContainer(IMAGE)
                 .withExposedPorts(PORT)
-                .withEnv("MINIO_ROOT_USER",MINIO_ROOT_USER)
+                .withEnv("MINIO_ROOT_USER", MINIO_ROOT_USER)
                 .withEnv("MINIO_ROOT_PASSWORD", MINIO_ROOT_PASSWORD)
                 .withCommand(COMMAND)
                 .withStartupTimeout(Duration.ofSeconds(60))
+                .apply { start() }
 
         @JvmStatic
         @DynamicPropertySource
@@ -37,8 +38,8 @@ class ContainerTestBase {
             val port = instance.getMappedPort(PORT)
 
             registry.add("minio.url") { "http://$host:$port" }
-            registry.add("minio.accessKey"){ MINIO_ROOT_USER}
-            registry.add("minio.secretKey"){ MINIO_ROOT_PASSWORD}
+            registry.add("minio.accessKey") { MINIO_ROOT_USER }
+            registry.add("minio.secretKey") { MINIO_ROOT_PASSWORD }
         }
     }
 }
