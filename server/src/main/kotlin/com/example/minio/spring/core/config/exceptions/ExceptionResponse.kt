@@ -5,6 +5,5 @@ import java.time.LocalDateTime
 class ExceptionResponse(
     val code: String,
     val message: String,
-    val reason: String,
     val timeStamp: LocalDateTime
 )

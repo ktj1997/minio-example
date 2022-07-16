@@ -29,12 +29,13 @@ class MinIoFileSystemProvider(
     private val minioClient: MinioClient,
     private val minIoProperties: MinIoProperties
 ) : FileSystemProvider {
+
     override fun createBucket(name: String, objectLock: Boolean) {
         try {
             val args = MakeBucketArgs.builder().bucket(name).objectLock(objectLock).build()
             minioClient.makeBucket(args)
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.CREATE_BUCKET_FAILURE, e.message!!)
+            throw ApiException(ExceptionType.CREATE_BUCKET_FAILURE, e)
         }
     }
 
@@ -47,7 +48,7 @@ class MinIoFileSystemProvider(
                 )
             }.toList()
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.FIND_BUCKETS_FAILURE, e.message!!)
+            throw ApiException(ExceptionType.FIND_BUCKETS_FAILURE, e)
         }
     }
 
@@ -56,7 +57,7 @@ class MinIoFileSystemProvider(
             val args = RemoveBucketArgs.builder().bucket(bucket).build()
             minioClient.removeBucket(args)
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.DELETE_BUCKET_FAILURE, e.message!!)
+            throw ApiException(ExceptionType.DELETE_BUCKET_FAILURE, e)
         }
     }
 
@@ -76,7 +77,7 @@ class MinIoFileSystemProvider(
                 )
             }.toList()
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.FIND_FILE_FAILURE, e.message!!)
+            throw ApiException(ExceptionType.FIND_FILE_FAILURE, e)
         }
     }
 
@@ -96,7 +97,7 @@ class MinIoFileSystemProvider(
                 isDir = false
             )
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.UPLOAD_FILE_FAILURE, e.message!!)
+            throw ApiException(ExceptionType.UPLOAD_FILE_FAILURE, e)
         }
     }
 
@@ -125,7 +126,7 @@ class MinIoFileSystemProvider(
         try {
             minioClient.downloadObject(args)
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.DOWNLOAD_FILE_FAILURE)
+            throw ApiException(ExceptionType.DOWNLOAD_FILE_FAILURE, e)
         }
     }
 
@@ -137,7 +138,7 @@ class MinIoFileSystemProvider(
         try {
             minioClient.removeObject(args)
         } catch (e: Exception) {
-            throw ApiException(ExceptionType.REMOVE_FILE_FAILURE)
+            throw ApiException(ExceptionType.REMOVE_FILE_FAILURE, e)
         }
     }
 }
